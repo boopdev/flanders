@@ -49,5 +49,3 @@ class AcadiaBot(commands.Bot):
 if __name__ == "__main__":
     acadiaBotInstance = AcadiaBot()
     acadiaBotInstance.run(environ.get('BOT_TOKEN', None)) # We do a little environment variables
-
-# ''
