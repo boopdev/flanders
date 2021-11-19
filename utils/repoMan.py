@@ -1,7 +1,7 @@
 import git
-from os import PathLike, makedirs
+from os import PathLike, makedirs, listdir
 from os.path import exists
-from typing import Any, Dict, Union
+from typing import Any, Dict, List, Union
 import json
 
 class RepositoryManagementHelper(object):
@@ -17,8 +17,19 @@ class RepositoryManagementHelper(object):
         """
         makedirs(self.repo_path, exist_ok=True)
 
-    def getRepositoryList(self):
-        pass
+    def getRepositoryList(self) -> List[str]:
+        """Fetches the list of all user defined aliases.
+
+        :return: A list of strings which represent all of the repositories that have been externally downloaded
+        :rtype: List[str]
+        """
+
+        allAliases = listdir(
+            self.repo_path
+        )
+
+        print(allAliases)
+        
 
     def getRepositoryConfig(self, dirExtension : str) -> Union[Dict[str, Any], None]:
         """Returns the dict containing the data from the repository meta file
@@ -42,10 +53,15 @@ class RepositoryManagementHelper(object):
         :param url: The url for the repository
         :type url: str
         """
+        
+        if exists(self.repo_path + f"/{dirExtension}"):
+            raise FileExistsError("That alias is already taken...")
+
         x = git.Repo.clone_from(url, to_path = self.repo_path + f"/{dirExtension}")
         
 
 if __name__ == "__main__":
     test_repo = "https://github.com/boopdev/flanders-ext-test"
     rmh = RepositoryManagementHelper(r"C:\Users\steel\Desktop\flanders\repositories")
-    rmh.cloneRepository("testBoopdev", test_repo)
+    #rmh.cloneRepository("testBoopdev", test_repo)
+    rmh.getRepositoryList()

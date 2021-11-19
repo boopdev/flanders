@@ -17,7 +17,8 @@ class AcadiaBot(commands.Bot):
 
         autoload_extensions = [
             'cogs.testCog',
-            'cogs.mathCog'
+            'cogs.mathCog',
+            'cogs.repoManagementCog'
         ]
 
         for ext in autoload_extensions:
